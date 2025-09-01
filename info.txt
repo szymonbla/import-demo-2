@@ -1,0 +1,32 @@
+1. Health Monitoring (/actuator/health)
+Application Status: Overall UP/DOWN status
+Database Health: H2 database connectivity and status
+Disk Space: Available disk space and thresholds
+Custom Health Indicators: Can be added for your specific components
+2. Metrics (/actuator/metrics)
+JVM Metrics:
+Memory usage (heap/non-heap)
+Garbage collection statistics
+Thread counts and states
+Class loading information
+Application Metrics:
+HTTP request metrics (count, timing, status codes)
+Database connection pool metrics (HikariCP)
+Custom business metrics (can be added)
+System Metrics:
+CPU usage
+Disk space
+System load average
+3. Application Information (/actuator/info)
+4. Configuration Monitoring
+/actuator/env: Environment variables and properties
+/actuator/configprops: Configuration properties with their values
+/actuator/conditions: Auto-configuration conditions
+5. Runtime Information
+/actuator/beans: All Spring beans in the application context
+/actuator/mappings: All HTTP endpoint mappings (like your /api/import)
+/actuator/scheduledtasks: Scheduled tasks information
+6. Debugging Tools
+/actuator/threaddump: Thread dump for debugging
+/actuator/heapdump: Heap dump (downloadable file)
+/actuator/loggers: View and modify log levels at runtime

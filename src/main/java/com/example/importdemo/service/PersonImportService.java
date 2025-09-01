@@ -4,7 +4,9 @@ import com.example.importdemo.entity.Person;
 import com.example.importdemo.repository.PersonRepository;
 import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStreamReader;
@@ -14,8 +16,11 @@ import java.util.List;
 @Service
 public class PersonImportService {
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
+
+    public PersonImportService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     public int importPeopleFromCsv(MultipartFile file) throws Exception {
         List<Person> people = new ArrayList<>();
