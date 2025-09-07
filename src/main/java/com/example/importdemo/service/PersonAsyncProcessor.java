@@ -1,7 +1,6 @@
 package com.example.importdemo.service;
 
 import com.example.importdemo.configuration.LockProvider;
-import com.example.importdemo.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
