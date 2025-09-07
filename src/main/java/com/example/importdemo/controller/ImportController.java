@@ -1,12 +1,20 @@
 package com.example.importdemo.controller;
 
+import com.example.importdemo.entity.ImportInfoDto;
 import com.example.importdemo.entity.Person;
 import com.example.importdemo.service.PersonImportService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,29 +23,17 @@ import java.util.Map;
 @RequestMapping("/api")
 public class ImportController {
 
-    @Autowired
-    private PersonImportService personImportService;
+
+    private final PersonImportService personImportService;
+
+    public ImportController(PersonImportService personImportService) {
+        this.personImportService = personImportService;
+    }
 
     @PostMapping("/import")
-    public ResponseEntity<Map<String, Object>> importCsv(@RequestParam("file") MultipartFile file) {
-        Map<String, Object> response = new HashMap<>();
-        
-        try {
-            if (file.isEmpty()) {
-                response.put("error", "Please select a file to upload");
-                return ResponseEntity.badRequest().body(response);
-            }
-
-            int totalRecords = personImportService.importPeopleFromCsv(file);
-            
-            response.put("message", "File imported successfully");
-            response.put("totalRecords", totalRecords);
-            return ResponseEntity.ok(response);
-            
-        } catch (Exception e) {
-            response.put("error", "Failed to import file: " + e.getMessage());
-            return ResponseEntity.badRequest().body(response);
-        }
+    public ResponseEntity<ImportInfoDto> importCsv(@RequestParam("file") MultipartFile file) {
+        ImportInfoDto info = personImportService.startCsvImport(file);
+        return ResponseEntity.accepted().body(info);
     }
 
     @GetMapping("/people")

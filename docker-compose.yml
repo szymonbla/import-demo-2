@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379" # Mapuje port 6379 z kontenera na port 6379 na Twojej maszynie
+    restart: always
+
+volumes:
+  redis-data:
